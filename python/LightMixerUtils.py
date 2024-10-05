@@ -1024,11 +1024,19 @@ def Houdini_Copy_All_Layers_Button():
 
     """
     from PySide2.QtGui import QGuiApplication
+    import re
 
     n = nuke.thisNode()
     k = nuke.thisKnob()
     allKnobs = n.knobs()
     AOVPrefix = n['AOVPattern'].value()
+
+    lightIDNumbers = []
+    pattern = re.compile(r'lightID(\d+)$')
+    for knob in n.knobs().values():
+        match = pattern.search(knob.name())
+        if match:
+            lightIDNumbers.append(match.group(1))
 
 
     lightAOVKnobsList = [knob for knob in allKnobs if knob.startswith("LightAOV")]
@@ -1040,28 +1048,28 @@ def Houdini_Copy_All_Layers_Button():
     HSV = '<big><font style="background-color:#807460;">H<font style="background-color:#606680;">S<font style="background-color:#80607d;">V'
 
     #adding date and script name to dictionary
-    script_name = nuke.scriptName().split('/')
-    dict = {'comment_info': f'Date of import: {date.today()} \nImport from: {script_name[-1]}', }
+    scriptName = nuke.scriptName().split('/')
+    dict = {'comment_info': f'Date of import: {date.today()} \nImport from: {scriptName[-1]}', }
 
     for index, lightAOV in enumerate(lightAOVNameListSliced):
 
-        index = str(index + 1)
-        IntensityValue = n['IntensityAOV' + index].value()
-        ExposureValue = n['ExposureAOV' + index].value()
+        
+        IntensityValue = n['IntensityAOV' + lightIDNumbers[index]].value()
+        ExposureValue = n['ExposureAOV' + lightIDNumbers[index]].value()
 
-        if n['HSV_RGBAOV' + index].label() == HSV:
+        if n['HSV_RGBAOV' + lightIDNumbers[index]].label() == HSV:
 
             for node in n.nodes():
-                if "Colour AdjustmentsAOV" + index in node['label'].getValue():
+                if "Colour AdjustmentsAOV" + lightIDNumbers[index] in node['label'].getValue():
                     RGBValues = node['multiply'].value()
 
-        if n['HSV_RGBAOV' + index].label() == RGB:
-            RGBValues = n['RGBColourAOV' + index].value()
+        if n['HSV_RGBAOV' + lightIDNumbers[index]].label() == RGB:
+            RGBValues = n['RGBColourAOV' + lightIDNumbers[index]].value()
 
         # Get RGB Temperature value and multiply it with rgb values to be included when copying to houdini
-        if n['DisableTemperatureAOV' + index].value() == 0:
+        if n['DisableTemperatureAOV' + lightIDNumbers[index]].value() == 0:
             for node in n.nodes():
-                if "TemperatureAOV" + index in node['label'].getValue():
+                if "TemperatureAOV" + lightIDNumbers[index] in node['label'].getValue():
                     TemperatureValue = node['white'].value()
                     TemperatureValue = TemperatureValue[:-1]
 
@@ -1077,6 +1085,7 @@ def Houdini_Copy_All_Layers_Button():
             GreenValue,
             BlueValue,
         ]
+        index = str(index + 1)
 
     clipboardText = f"""{dict}"""
 
