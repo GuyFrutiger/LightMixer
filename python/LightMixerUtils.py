@@ -121,7 +121,7 @@ def Houdini_Copy_Button():
     if n['DisableTemperatureAOV' + layerNumber].value() == 0:
         for node in n.nodes():
             if "TemperatureAOV" + layerNumber in node['label'].getValue():
-                TemperatureValue = node['white'].value()
+                TemperatureValue = node['multiply'].value()
                 TemperatureValue = TemperatureValue[:-1]
 
                 RGBValues = [x * y for x, y in zip(RGBValues, TemperatureValue)]
@@ -501,28 +501,28 @@ def Light_Layer_Creation(thisGroup, knobCounter):
     subtractMultiply.setSelected(True)
     subtractMultiply.setInput(0, mainShuffle)
     subtractMultiply['channels'].setValue('rgb')
-    subtractMultiply['label'].setValue('Subtract + AOV' + knobCounter)
+    subtractMultiply['label'].setValue('SubtractAOV' + knobCounter)
     subtractMultiply['xpos'].setValue(int(mainShuffle['xpos'].value()))
     subtractMultiply['ypos'].setValue(int(mainShuffle['ypos'].value()) + 200)
 
     expGrade = nuke.nodes.Grade()
     expGrade.setSelected(True)
     expGrade.setInput(0, subtractMultiply)
-    expGrade['label'].setValue('Exposure & Intensity + AOV' + knobCounter)
+    expGrade['label'].setValue('Exposure & IntensityAOV' + knobCounter)
     expGrade['xpos'].setValue(int(subtractMultiply['xpos'].value()))
     expGrade['ypos'].setValue(int(subtractMultiply['ypos'].value()) + 200)
 
     overallSatNode = nuke.nodes.Saturation()
     overallSatNode.setSelected(True)
     overallSatNode.setInput(0, expGrade)
-    overallSatNode['label'].setValue('Overall Saturation + AOV' + knobCounter)
+    overallSatNode['label'].setValue('Overall SaturationAOV' + knobCounter)
     overallSatNode['xpos'].setValue(int(expGrade['xpos'].value()))
     overallSatNode['ypos'].setValue(int(expGrade['ypos'].value()) + 200)
 
     colourGrade = nuke.nodes.Grade()
     colourGrade.setSelected(True)
     colourGrade.setInput(0, overallSatNode)
-    colourGrade['label'].setValue('Colour Adjustments + AOV' + knobCounter)
+    colourGrade['label'].setValue('Colour AdjustmentsAOV' + knobCounter)
     colourGrade['xpos'].setValue(int(overallSatNode['xpos'].value()))
     colourGrade['ypos'].setValue(int(overallSatNode['ypos'].value()) + 200)
 
@@ -576,7 +576,7 @@ def Light_Layer_Creation(thisGroup, knobCounter):
     tGrade = nuke.nodes.Grade()
     tGrade.setSelected(True)
     tGrade.setInput(0, newDot3)
-    tGrade['label'].setValue('Temperature + AOV' + knobCounter)
+    tGrade['label'].setValue('TemperatureAOV' + knobCounter)
     tGrade['xpos'].setValue(int(newDot3['xpos'].value()) - 34)
     tGrade['ypos'].setValue(int(newDot3['ypos'].value()) + 100)
 
@@ -1070,7 +1070,7 @@ def Houdini_Copy_All_Layers_Button():
         if n['DisableTemperatureAOV' + lightIDNumbers[index]].value() == 0:
             for node in n.nodes():
                 if "TemperatureAOV" + lightIDNumbers[index] in node['label'].getValue():
-                    TemperatureValue = node['white'].value()
+                    TemperatureValue = node['multiply'].value()
                     TemperatureValue = TemperatureValue[:-1]
 
                     RGBValues = [x * y for x, y in zip(RGBValues, TemperatureValue)]
