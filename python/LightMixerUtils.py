@@ -31,10 +31,10 @@ def Remove_Layer_Button():
     thisGroup = nuke.thisNode()
     allKnobs = list(thisGroup.knobs().keys())
 
-    for knob_name in allKnobs:
+    for knobName in allKnobs:
 
-        if (re.findall("\d+", layerNumber) == re.findall("\d+", knob_name)):
-            thisGroup.removeKnob(thisGroup[knob_name])
+        if (re.findall("\d+", layerNumber) == re.findall("\d+", knobName)):
+            thisGroup.removeKnob(thisGroup[knobName])
         continue
 
 
@@ -94,8 +94,8 @@ def Houdini_Copy_Button():
     HSV = '<big><font style="background-color:#807460;">H<font style="background-color:#606680;">S<font style="background-color:#80607d;">V'
 
     #Adding date and script name to dictionary
-    script_name = nuke.scriptName().split('/')
-    dict = {'comment_info': f'Date of import: {date.today()} \nImport from: {script_name[-1]}', }
+    scriptName = nuke.scriptName().split('/')
+    dict = {'comment_info': f'Date of import: {date.today()} \nImport from: {scriptName[-1]}', }
 
     AOVPrefix = n['AOVPattern'].value()
     AOVName = n['LightAOV' + layerNumber].value()
@@ -210,22 +210,22 @@ def HSV_RGB_Button():
     def RGB_to_HSV():
 
         def RGB_to_HSV_Algorithm(r, g, b):
-            max_val = max(r, g, b)
-            min_val = min(r, g, b)
+            maxVal = max(r, g, b)
+            minVal = min(r, g, b)
 
-            delta = max_val - min_val
+            delta = maxVal - minVal
 
             if delta == 0:
                 h = 0
-            elif max_val == r:
+            elif maxVal == r:
                 h = 60 * ((g - b) / delta % 6)
-            elif max_val == g:
+            elif maxVal == g:
                 h = 60 * ((b - r) / delta + 2)
-            elif max_val == b:
+            elif maxVal == b:
                 h = 60 * ((r - g) / delta + 4)
 
-            s = 0 if max_val == 0 else delta / max_val
-            v = max_val
+            s = 0 if maxVal == 0 else delta / maxVal
+            v = maxVal
 
             return h, s, v
 
@@ -354,16 +354,16 @@ def Dyanmic_Mask_Input():
 
             index = inputNodes['number'].value()
 
-            connected_node = thisGroup.input(int(index))
-            if connected_node != None:
-                connected_node = connected_node['name'].getValue()
+            connectedNode = thisGroup.input(int(index))
+            if connectedNode != None:
+                connectedNode = connectedNode['name'].getValue()
 
             thisGroup.setInput(int(index), None)
 
             inputNodes['number'].setValue(float(i))
             with nuke.root():
-                connected_node = nuke.toNode(connected_node)
-            thisGroup.setInput(i, connected_node)
+                connectedNode = nuke.toNode(connectedNode)
+            thisGroup.setInput(i, connectedNode)
             print("Index:", index)
             print("new index:", i)
 
@@ -956,8 +956,8 @@ def Populate_Layers_Button():
                 lastKnobIndex = allKnobs.index(lastKnobName)
                 knobsToDelete = allKnobs[lastKnobIndex + 1:]
 
-                for knob_name in knobsToDelete:
-                    thisGroup.removeKnob(thisGroup[knob_name])
+                for knobName in knobsToDelete:
+                    thisGroup.removeKnob(thisGroup[knobName])
 
             task = nuke.ProgressTask('Building layer setup')
             layersList = []
@@ -1131,8 +1131,8 @@ def Reset_All_Button():
         lastKnobIndex = allKnobs.index(lastKnobName)
         knobsToDelete = allKnobs[lastKnobIndex + 1:]
 
-        for knob_name in knobsToDelete:
-            thisGroup.removeKnob(thisGroup[knob_name])
+        for knobName in knobsToDelete:
+            thisGroup.removeKnob(thisGroup[knobName])
 
     if thisGroup['lights'].value() > 1:
         knobInfoText = nuke.Text_Knob('info', '')
