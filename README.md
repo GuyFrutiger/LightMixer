@@ -1,10 +1,8 @@
 # LightMixer
 Dynamic Nuke & Houdini LightMixing tool
-
 Current version: 1.0
 
 Tool info and Tutorial:
-
 https://www.guyfrutiger.com/toolbench
 
 HOW TO INSTALL: 
@@ -20,7 +18,6 @@ Nuke Gizmo:
 4. Run Nuke
 
 Houdini HDA: 
-
 Simple install in current .hip file:
 1. Open your .hip file 
 2. File -> Import -> Houdini Digital Asset -> Navigate to where the Houdini HDA is on your disk. -> Install
