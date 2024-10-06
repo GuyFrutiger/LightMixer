@@ -1,11 +1,3 @@
-# --------------------------------------------------------------
-#  LightMixerUtils.py
-#  Version: 1.0
-#  Last Updated: 27/09/2024
-#  Last updated by: Guy Frutiger
-# --------------------------------------------------------------
-
-## Imports
 import nuke
 from datetime import date
 
