@@ -1,374 +1,373 @@
 Group {
 name LightMixer1
-tile_color 0x9fffff
-label "Layer count: \[value lights]"
-addUserKnob {20 User l "Light Mixer"}
-addUserKnob {26 LayerControl l "<b>Layer Controls<b>"}
-addUserKnob {1 FilterAOV l "Filter AOVs by:" t "Filter the connected channels by this string so when pressing \"Populate\" it only creates layers for all channels with that string in them." -STARTLINE}
-FilterAOV LGT
-addUserKnob {26 _2 l "" -STARTLINE T "   "}
-addUserKnob {1 AOVPattern l "AOV Prefix" t "Define your AOV naming structure in here to ensure the Copy to Houdini functionality only copies the aov name and not any prefixes (\"C_\", \"rgba_\" etc.) with it." -STARTLINE}
-AOVPattern rgba_
-addUserKnob {22 populateAOV l "<big><font color=yellow>Populate Layers" t "This sets up layers for all your AOVs that have the defined filter name in their AOV name." T "from LightMixerUtils import *\n\nPopulate_Layers_Button()" +STARTLINE}
-addUserKnob {22 houdiniCopyAllLayers l "<big><font color=yellow>Houdini Copy all Layers" t "This button copies an editLight node for each layer below with the adjustments made on each layer. You can then paste it into houdini by hitting tab and searching for \"Nuke LightMixer Import\". \nIf it can find the correct light it will automatically add the right prim path to the node as well. However, it will still work if it can't find it." -STARTLINE T "from LightMixerUtils import *\n\nHoudini_Copy_All_Layers_Button()"}
-addUserKnob {22 AddLightAOV l "Add Layer" t "This adds a new layer" T "from LightMixerUtils import *\n\nAdd_Light_Layer_Button()" +STARTLINE}
-addUserKnob {22 resetAll l "Reset All" t "This will reset the whole node to Default and delete all added layers and adjustments made." -STARTLINE T "from LightMixerUtils import *\n\nReset_All_Button()"}
-addUserKnob {26 lightCount l " Light Count: " -STARTLINE T <b>1</b>}
-addUserKnob {3 lights l INVISIBLE +INVISIBLE}
-lights 1
-addUserKnob {22 collapseGroups l "Collapse all Layers" t "This will collapse all the layers so you can have a better overview of them." T "from LightMixerUtils import *\n\nCollapse_layers_Button()" +STARTLINE}
-addUserKnob {26 TextControls l "" +STARTLINE T "\t              Text Overlay  "}
-addUserKnob {26 test l "" -STARTLINE}
-addUserKnob {4 textPos l " " t "Determines the position of the text that will appear once a layer has been alterted" M {"Top Left " "Top Right" "Bottom Left " "Bottom Right" "" "" "" "" "" "" "" "" ""}}
-addUserKnob {7 burnInTextSize l "  Text Size " t "Adjust the size of the text " -STARTLINE R 0.1 1}
-burnInTextSize 0.1
-addUserKnob {26 _1 l "" +STARTLINE T " "}
-addUserKnob {26 LightLayers l "<b>Light Layers<b>"}
-addUserKnob {20 lightID1 l none n 1}
-addUserKnob {41 LightAOV1 l "Light AOV" t "Select light AOV to adjust" T Shuffle2.in}
-addUserKnob {6 SoloAOV1 l "View AOV" t "View just the selected AOV and the changes made to it" +STARTLINE}
-addUserKnob {6 EnableAOV1 l "Enable Edits" t "Enable or disable the adjustments made to the selected AOV on this layer" +STARTLINE}
-EnableAOV1 true
-addUserKnob {6 SubtractAOV1 l "Subtract Light" t "Subtract selected AOV from rgba/beauty" -STARTLINE}
-addUserKnob {6 CopyAOV1 l "Shuffle back AOV" t "Shuffle back adjusted AOV. If disabled the changes made to the light are only visible in the beauty/rgba." -STARTLINE}
-CopyAOV1 true
-addUserKnob {22 resetAOV1 l "Reset Edits" t "Reset the adjustments made to the selected AOV" -STARTLINE T "from LightMixerUtils import *\n\nReset_Edits_Button()"}
-addUserKnob {22 copyAdjAOV1 l "Houdini Copy" t "This button copies an editLight node with the adjustments made on this layer. You can then paste it into houdini by hitting tab and searching for \"Nuke LightMixer Import\". \nIf it can find the correct light it will automatically add the right prim path to the node as well. However, it will still work if it can't find it." -STARTLINE T "from LightMixerUtils import *\n\nHoudini_Copy_Button()"}
-addUserKnob {7 IntensityAOV1 l Intensity t "Adjust Intensity of light (essentially just a multiply)" R 0 10}
-IntensityAOV1 1
-addUserKnob {7 ExposureAOV1 l Exposure t "Adjust Exposure of selected light in stops" R -5 5}
-addUserKnob {41 OverallSatAOV1 l "Overall Saturation" t "Adjust Saturation of selected AOV" T Saturation2.saturation}
-addUserKnob {26 colourModeText l "Colour Mode:" T " "}
-addUserKnob {22 HSV_RGBAOV1 l "<big><font style=\"background-color:#806060;\">R<font style=\"background-color:#608071;\">G<font style=\"background-color:#606680;\">B" t "Changes between RGB and HSV to adjust the light colour. The enetered values in either mode will be converted to the other when pressing this button" -STARTLINE T "from LightMixerUtils import *\n\nHSV_RGB_Button()"}
-addUserKnob {18 RGBColourAOV1 l RGB t "Multiply the red, green and blue channels independently"}
-RGBColourAOV1 {1 1 1}
-addUserKnob {6 RGBColourAOV1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
-addUserKnob {6 RGBColourAOV_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
-addUserKnob {7 HueAOV1 l Hue t "Adjust the Hue of the colour you are adding to the light in HSV" +HIDDEN R 0 360}
-addUserKnob {7 SaturationAOV1 l Saturation t "Adjust the Saturation of the colour you are adding to the light in HSV" +HIDDEN}
-addUserKnob {7 ValueAOV1 l Value t "Adjust the Brightness of the colour you are adding to the light in HSV" +HIDDEN}
-ValueAOV1 1
-addUserKnob {41 DisableTemperatureAOV1 l "Disable Colour Temperature" T Grade2.disable}
-addUserKnob {7 TemperatureAOV1 l "Temperature (k)" t "Adjust colour temperature of the selected AOV in Kelvin. Usable range is between 1000 - 20000. Default white is set at 6600." R 1000 10000}
-TemperatureAOV1 6600
-addUserKnob {26 mask l Mask}
-addUserKnob {41 enableMaskAOV1 l "Enable Mask" T NoOp1.addMaskInputAOV1}
-addUserKnob {41 maskChannelMaskAOV1 l "" t "Choose which channel you want to use for your mask" -STARTLINE T Merge2.maskChannelMask}
-addUserKnob {41 InvertMaskAOV1 l invert t "Invert the mask" -STARTLINE T Merge2.invert_mask}
-addUserKnob {20 endGroup n -1}
-addUserKnob {26 last l "" +STARTLINE}
-addUserKnob {26 info l "" +STARTLINE T "v1.0 Guy Frutiger 2024 <br>guyfrutiger.com\n<b><h4><a href=\"https://www.guyfrutiger.com/\" style=\"color:#FFFF00;text-decoration: none;\">Tool Documentation</a></b></h4>\n\n\n"}
+ tile_color 0x9fffff
+ label "Layer count: \[value lights]"
+ addUserKnob {20 User l "Light Mixer"}
+ addUserKnob {26 LayerControl l "<b>Layer Controls<b>"}
+ addUserKnob {1 FilterAOV l "Filter AOVs by:" t "Filter the connected channels by this string so when pressing \"Populate\" it only creates layers for all channels with that string in them." -STARTLINE}
+ FilterAOV LGT
+ addUserKnob {26 _2 l "" -STARTLINE T "  "}
+ addUserKnob {1 AOVPattern l "AOV Prefix:" t "Define your AOV naming structure in here to ensure the Copy to Houdini functionality only copies the aov name and not any prefixes (\"C_\", \"rgba_\" etc.) with it." -STARTLINE}
+ AOVPattern C_
+ addUserKnob {22 populateAOV l "<big><font color=yellow>Populate Layers" t "This sets up layers for all your AOVs that have the defined filter name in their AOV name." T "from LightMixerUtils import *\n\nPopulate_Layers_Button()" +STARTLINE}
+ addUserKnob {22 houdiniCopyAllLayers l "<big><font color=yellow>Houdini Copy all Layers" t "This button copies an editLight node for each layer below with the adjustments made on each layer. You can then paste it into houdini by hitting tab and searching for \"Nuke LightMixer Import\". \nIf it can find the correct light it will automatically add the right prim path to the node as well. However, it will still work if it can't find it." -STARTLINE T "from LightMixerUtils import *\n\nHoudini_Copy_All_Layers_Button()"}
+ addUserKnob {22 AddLightAOV l "Add Layer" t "This adds a new layer" T "from LightMixerUtils import *\n\nAdd_Light_Layer_Button()" +STARTLINE}
+ addUserKnob {22 resetAll l "Reset All" t "This will reset the whole node to Default and delete all added layers and adjustments made." -STARTLINE T "from LightMixerUtils import *\n\nReset_All_Button()"}
+ addUserKnob {26 lightCount l " Light Count: " -STARTLINE T <b>1</b>}
+ addUserKnob {3 lights l INVISIBLE +INVISIBLE}
+ lights 1
+ addUserKnob {22 collapseGroups l "Collapse all Layers" t "This will collapse all the layers so you can have a better overview of them." T "from LightMixerUtils import *\n\nCollapse_layers_Button()" +STARTLINE}
+ addUserKnob {26 TextControls l "" +STARTLINE T "\t              Text Overlay  "}
+ addUserKnob {26 test l "" -STARTLINE}
+ addUserKnob {4 textPos l " " t "Determines the position of the text that will appear once a layer has been alterted" M {"Top Left " "Top Right" "Bottom Left " "Bottom Right" "" "" "" "" "" "" "" "" ""}}
+ addUserKnob {7 burnInTextSize l "  Text Size " t "Adjust the size of the text " -STARTLINE R 0.1 1}
+ burnInTextSize 0.1
+ addUserKnob {26 _1 l "" +STARTLINE T " "}
+ addUserKnob {26 LightLayers l "<b>Light Layers<b>"}
+ addUserKnob {20 lightID1 l none n 1}
+ addUserKnob {41 LightAOV1 l "Light AOV" t "Select light AOV to adjust" T Shuffle2.in}
+ addUserKnob {6 SoloAOV1 l "View AOV" t "View just the selected AOV and the changes made to it" +STARTLINE}
+ addUserKnob {6 EnableAOV1 l "Enable Edits" t "Enable or disable the adjustments made to the selected AOV on this layer" +STARTLINE}
+ EnableAOV1 true
+ addUserKnob {6 SubtractAOV1 l "Subtract Light" t "Subtract selected AOV from rgba/beauty" -STARTLINE}
+ addUserKnob {6 CopyAOV1 l "Shuffle back AOV" t "Shuffle back adjusted AOV. If disabled the changes made to the light are only visible in the beauty/rgba." -STARTLINE}
+ CopyAOV1 true
+ addUserKnob {22 resetAOV1 l "Reset Edits" t "Reset the adjustments made to the selected AOV" -STARTLINE T "from LightMixerUtils import *\n\nReset_Edits_Button()"}
+ addUserKnob {22 copyAdjAOV1 l "Houdini Copy" t "This button copies an editLight node with the adjustments made on this layer. You can then paste it into houdini by hitting tab and searching for \"Nuke LightMixer Import\". \nIf it can find the correct light it will automatically add the right prim path to the node as well. However, it will still work if it can't find it." -STARTLINE T "from LightMixerUtils import *\n\nHoudini_Copy_Button()"}
+ addUserKnob {7 IntensityAOV1 l Intensity t "Adjust Intensity of light (essentially just a multiply)" R 0 10}
+ IntensityAOV1 1
+ addUserKnob {7 ExposureAOV1 l Exposure t "Adjust Exposure of selected light in stops" R -5 5}
+ addUserKnob {41 OverallSatAOV1 l "Overall Saturation" t "Adjust Saturation of selected AOV" T Saturation2.saturation}
+ addUserKnob {26 colourModeText l "Colour Mode:" T " "}
+ addUserKnob {22 HSV_RGBAOV1 l "<big><font style=\"background-color:#806060;\">R<font style=\"background-color:#608071;\">G<font style=\"background-color:#606680;\">B" t "Changes between RGB and HSV to adjust the light colour. The enetered values in either mode will be converted to the other when pressing this button" -STARTLINE T "from LightMixerUtils import *\n\nHSV_RGB_Button()"}
+ addUserKnob {18 RGBColourAOV1 l RGB t "Multiply the red, green and blue channels independently"}
+ RGBColourAOV1 {1 1 1}
+ addUserKnob {6 RGBColourAOV1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 RGBColourAOV_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 HueAOV1 l Hue t "Adjust the Hue of the colour you are adding to the light in HSV" +HIDDEN R 0 360}
+ addUserKnob {7 SaturationAOV1 l Saturation t "Adjust the Saturation of the colour you are adding to the light in HSV" +HIDDEN}
+ addUserKnob {7 ValueAOV1 l Value t "Adjust the Brightness of the colour you are adding to the light in HSV" +HIDDEN}
+ ValueAOV1 1
+ addUserKnob {41 DisableTemperatureAOV1 l "Disable Colour Temperature" T Grade2.disable}
+ addUserKnob {7 TemperatureAOV1 l "Temperature (k)" t "Adjust colour temperature of the selected AOV in Kelvin. Usable range is between 1000 - 20000. Default white is set at 6600." R 1000 10000}
+ TemperatureAOV1 6600
+ addUserKnob {26 mask l Mask}
+ addUserKnob {41 enableMaskAOV1 l "Enable Mask" T NoOp1.addMaskInputAOV1}
+ addUserKnob {41 maskChannelMaskAOV1 l "" t "Choose which channel you want to use for your mask" -STARTLINE T Merge2.maskChannelMask}
+ addUserKnob {41 InvertMaskAOV1 l invert t "Invert the mask" -STARTLINE T Merge2.invert_mask}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 last l "" +STARTLINE}
+ addUserKnob {26 info l "" +STARTLINE T "v1.0 Guy Frutiger 2024 <br>guyfrutiger.com\n<b><br><a href=\"https://www.guyfrutiger.com/toolbench/lightmixer\" style=\"color:#c1c1c1;text-decoration: underline;\">Tool Page</a></b>\n\n\n"}
 }
-Input {
-inputs 0
-name Render
-label "Static & non select"
-xpos 778
-ypos -414
-}
-Dot {
-name Dot10
-label Static
-note_font_size 0
-xpos 812
-ypos -312
-}
-set Nd189d20 [stack 0]
-Text2 {
-font_size_toolbar 100
-font_width_toolbar 100
-font_height_toolbar 100
-opacity {{"parent.burnInTextSize == 0 ? 0 : 1"}}
-message "Layers graded: \[python -exec \{\n\nshuffleNodesChannel = \[]\n\nfor shuffleNodes in nuke.allNodes('Shuffle'):\n\tif \"mainShuffle\" in shuffleNodes\['label'].getValue():\n\t\tshuffleNodesChannelValue = shuffleNodes\['in'].value()\n\t\tshuffleNodesChannel.append(shuffleNodesChannelValue)\n\n\nfilteredShuffleNodesChannel = \[item for item in shuffleNodesChannel if \"none\" not in item]\nfilteredShuffleNodesChannel = len(filteredShuffleNodesChannel)\n\n\}] \[python filteredShuffleNodesChannel]"
-old_message {{76 97 121 101 114 115 32 103 114 97 100 101 100 58 32 32 51}
-  }
-old_expression_markers {{15 14 16 16}
-  }
-box {{input.format.x+(input.format.r*.02)} {"input.format.y + (input.format.t*.02)"} {input.format.r-(input.format.r*.02)} {input.format.t-(input.format.t*.02)}}
-xjustify {{"parent.textPos == 0 || parent.textPos == 2 ? 0 :2" x1094 0}}
-yjustify {{"parent.textPos == 2 || parent.textPos == 3 ? 2 :0" x1094 0}}
-transforms {{0 2}
-  }
-cursor_position 57
-global_font_scale {{"clamp(parent.burnInTextSize, 0, 1) * (input.format.width/800)"}}
-scale {1 1}
-cursor_initialised true
-autofit_bbox false
-initial_cursor_position {{65.60009766 299.2997437}
-  }
-group_animations {{0} imported: 0 selected: items: "root transform/"}
-animation_layers {{1 11 1920 1080 0 0 1 1 0 0 0 0}
-  }
-enable_background true
-background_opacity 0.3
-shadow_opacity 0.8
-shadow_angle 317
-name GradeBurnIn1
-label "BurnIn & Static\n"
-selected true
-xpos 778
-ypos -219
-disable {{"\[python -exec \{\n\nshuffleNodesChannel = \[]\n\nfor shuffleNodes in nuke.allNodes('Shuffle'):\n   if \"mainShuffle\" in shuffleNodes\['label'].getValue():\n      shuffleNodesChannelValue = shuffleNodes\['in'].value()\n      shuffleNodesChannel.append(shuffleNodesChannelValue)\n\n\nfilteredShuffleNodesChannel = \[item for item in shuffleNodesChannel if \"none\" not in item]\n\nif len(filteredShuffleNodesChannel) == 0:\n    i = 1\nelse:\n    i = 0\n\n\}] \[python i]\n"}}
-}
-Dot {
-name Dot1
-label Static
-note_font_size 0
-xpos 812
-ypos -56
-}
-set Nd1cdb50 [stack 0]
-Dot {
-name Dot2
-label Static
-note_font_size 0
-xpos 1081
-ypos -56
-}
-Shuffle {
-in none
-alpha white
-name Shuffle2
-knobChanged "from LightMixerUtils import *\nDynamic_Group_Label()"
-label "mainShuffleAOV1\nStatic\n"
-xpos 1047
-ypos 86
-}
-set Nd1dc590 [stack 0]
-Dot {
-name Dot8
-label Static
-note_font_size 0
-xpos 1424
-ypos 102
-}
-Dot {
-name Dot7
-label Static
-note_font_size 0
-xpos 1424
-ypos 1098
-}
-push $Nd1dc590
-Multiply {
-channels rgb
-value {{1-parent.SubtractAOV1}}
-name Multiply1
-label "Subtract Channel\nStatic"
-xpos 1047
-ypos 197
-}
-Grade {
-white {{parent.IntensityAOV1}}
-multiply {{"1 / (2 ** ( parent.ExposureAOV1 * -1 ) )"}}
-name Grade3
-label "Exposure & IntensityAOV1\nStatic"
-xpos 1047
-ypos 303
-}
-Saturation {
-name Saturation2
-label "Overall SaturationAOV1\nStatic"
-xpos 1047
-ypos 390
-}
-Grade {
-multiply {{red} {green} {blue} 1}
-name Grade1
-label "Colour AdjustmentsAOV1\nStatic"
-xpos 1047
-ypos 503
-addUserKnob {20 User l "Input Values"}
-addUserKnob {6 modecheck l "mode check" +STARTLINE}
-modecheck true
-addUserKnob {7 red}
-red {{"modecheck == 1 ? parent.RGBColourAOV1.r  : redHSV"}}
-addUserKnob {7 green}
-green {{"modecheck == 1 ? parent.RGBColourAOV1.g : greenHSV"}}
-addUserKnob {7 blue}
-blue {{"modecheck == 1 ? parent.RGBColourAOV1.b : blueHSV"}}
-addUserKnob {26 ""}
-addUserKnob {7 hueint R 0 360}
-hueint {{"clamp(parent.HueAOV1, 0, 360)"}}
-addUserKnob {7 satint}
-satint {{"clamp( (parent.SaturationAOV1), 0, 1 )"}}
-addUserKnob {7 valueint}
-valueint {{"clamp( parent.ValueAOV1, 0, 1 )"}}
-addUserKnob {20 conversion l Conversion}
-addUserKnob {7 c}
-c {{"satint * valueint"}}
-addUserKnob {7 x}
-x {{"c * (1 - abs((hueint / 60) % 2 - 1))"}}
-addUserKnob {7 m}
-m {{"valueint - c"}}
-addUserKnob {7 redHSV l "Red HSV"}
-redHSV {{"( hueint >= 0 && hueint < 60 ? this.c : hueint >= 60 && hueint < 120 ? this.x : hueint >= 120 && hueint < 180 ? 0 : hueint >= 180 && hueint < 240 ? 0 : hueint >= 240 && hueint < 300 ? this.x : this.c ) + this.m"}}
-addUserKnob {7 greenHSV l "Green HSV"}
-greenHSV {{"( hueint >= 0 && hueint < 60 ? this.x : hueint >= 60 && hueint < 120 ? this.c : hueint >= 120 && hueint < 180 ? this.c : hueint >= 180 && hueint < 240 ? this.x : hueint >= 240 && hueint < 300 ? 0 : 0 ) + this.m"}}
-addUserKnob {7 blueHSV l "Blue HSV"}
-blueHSV {{"( hueint >= 0 && hueint < 60 ? 0 : hueint >= 60 && hueint < 120 ? 0 : hueint >= 120 && hueint < 180 ? this.x : hueint >= 180 && hueint < 240 ? this.c : hueint >= 240 && hueint < 300 ? this.c : this.x) + this.m"}}
-}
-Dot {
-name Dot5
-label Static
-note_font_size 0
-xpos 1081
-ypos 617
-}
-set Nd2397f0 [stack 0]
-Grade {
-white {{"clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 <= 66 ? 1 : clamp( ( ( ( ( clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 ) - 60 ) ** -0.1332047592 )  * 329.698727446 ), 0, 255 ) / 255"} {"clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 <= 66 ? clamp( ( ( ( log( clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 ) ) * 99.4708025861 ) - 161.1195681661 ), 0, 255 ) / 255  :   clamp( ( ( ( ( clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 ) - 60 ) ** -0.0755148492 )  * 288.1221695283 ), 0, 255 ) / 255"} {"clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 >= 66 ? 1 : clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 <= 19 ? 0 : clamp( ( ( log( ( ( clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 ) - 10 ) )  * 138.5177312231 ) - 305.0447927307 ), 0, 255 ) / 255"} 1}
-name Grade2
-knobChanged "from LightMixerUtils import *\nDynamic_Temperature_Knob()"
-label "TemperatureAOV1\nStatic"
-xpos 1047
-ypos 670
-}
-set Nd23e7b0 [stack 0]
-push $Nd2397f0
-Dot {
-name Dot6
-label Static
-note_font_size 0
-xpos 917
-ypos 617
-}
-Merge2 {
-inputs 2
-operation from
-output {rgba.red rgba.green rgba.blue -rgba.alpha}
-name Merge1
-label Static
-xpos 883
-ypos 676
-}
-Saturation {
-saturation 0
-name Saturation1
-label "\[value saturation]\nStatic"
-xpos 883
-ypos 813
-}
-push $Nd23e7b0
-Merge2 {
-inputs 2
-operation plus
-output {rgba.red rgba.green rgba.blue -rgba.alpha}
-name Merge4
-label "Match luminance \nStatic"
-xpos 1047
-ypos 813
-}
-Dot {
-name Dot3
-label Static
-note_font_size 0
-xpos 1081
-ypos 960
-}
-set Nd281530 [stack 0]
-Switch {
-inputs 2
-which {{1-parent.EnableAOV1}}
-name Switch2
-label Static
-xpos 1047
-ypos 1088
-}
-Dot {
-name Dot9
-label Static
-note_font_size 0
-xpos 1081
-ypos 1178
-}
-set Nd28eb60 [stack 0]
-Dot {
-name Dot4
-label Static
-note_font_size 0
-xpos 1081
-ypos 1451
-}
-push $Nd28eb60
-Shuffle {
-alpha white
-out {{{parent.Shuffle2.in}}}
-name Shuffle1
-label Static
-xpos 925
-ypos 1168
-}
-Remove {
-channels rgba
-name Remove1
-label Static
-xpos 925
-ypos 1276
-}
-push $Nd281530
-push $Nd1dc590
-push $Nd1cdb50
-Merge2 {
-inputs 2
-operation from
-output rgb
-maskChannelMask none
-name Merge2
-label "FromAOV1\nStatic"
-xpos 778
-ypos 86
-disable {{1-parent.EnableAOV1}}
-}
-Merge2 {
-inputs 2
-operation plus
-output {rgba.red rgba.green rgba.blue -rgba.alpha}
-maskChannelMask {{{parent.Merge2.maskChannelMask}}}
-maskChannelInput {{{parent.Merge2.maskChannelInput}}}
-invert_mask {{parent.Merge2.invert_mask}}
-name Merge3
-label "PlusAOV1\nStatic"
-xpos 778
-ypos 944
-disable {{1-parent.EnableAOV1}}
-}
-Copy {
-inputs 2
-channels all
-maskChannelMask {{{parent.Merge2.maskChannelMask}}}
-maskChannelInput {{{parent.Merge2.maskChannelInput}}}
-invert_mask {{parent.Merge2.invert_mask}}
-name Copy1
-label "CopyAOV1\nStatic"
-xpos 778
-ypos 1258
-disable {{1-parent.CopyAOV1}}
-}
-Switch {
-inputs 2
-which {{parent.SoloAOV1}}
-name Switch1
-label "Static "
-xpos 778
-ypos 1441
-}
-Output {
-name Output1
-label "Static & non select"
-note_font "DejaVu Sans"
-xpos 778
-ypos 1741
-}
-push $Nd189d20
-NoOp {
-name NoOp1
-knobChanged "from LightMixerUtils import *\nDyanmic_Mask_Input()"
-label "AOV1\nDon't Touch\nStatic"
-xpos 922
-ypos -334
-addUserKnob {20 User}
-addUserKnob {26 MaskInp l "Dynamic Mask Inputs Checkbox"}
-addUserKnob {6 addMaskInputAOV1 l "add mask input layer 1" +STARTLINE}
-}
+ Input {
+  inputs 0
+  name Render
+  label "Static & non select"
+  xpos 778
+  ypos -414
+ }
+ Dot {
+  name Dot10
+  label Static
+  note_font_size 0
+  xpos 812
+  ypos -312
+ }
+set N380fe400 [stack 0]
+ NoOp {
+  name NoOp1
+  knobChanged "from LightMixerUtils import *\nDyanmic_Mask_Input()"
+  label "AOV1\nDon't Touch\nStatic"
+  xpos 922
+  ypos -334
+  addUserKnob {20 User}
+  addUserKnob {26 MaskInp l "Dynamic Mask Inputs Checkbox"}
+  addUserKnob {6 addMaskInputAOV1 l "add mask input layer 1" +STARTLINE}
+ }
+push $N380fe400
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{"parent.burnInTextSize == 0 ? 0 : 1"}}
+  message "Layers graded:\n\[python -exec \{\nimport re\ncurrentNode = nuke.thisNode()\nnodePath = currentNode.fullName()\ngroupPath = nodePath.rsplit('.', 1)\[0]\nn = nuke.toNode(groupPath)\nallKnobs = n.knobs()\nAOVPrefix = n\['AOVPattern'].value()\n\nlightIDNumbers = \[]\npattern = re.compile(r'lightID(\\d+)\$')\nfor knob in n.knobs().values():\n    match = pattern.search(knob.name())\n    if match:\n        lightIDNumbers.append(match.group(1))\n\nlightAOVKnobsList = \[knob for knob in allKnobs if knob.startswith(\"LightAOV\")]\nlightAOVNameList = \[n\[knobName].value() for knobName in lightAOVKnobsList]\nlightAOVNameListSliced = \[entry\[len(AOVPrefix):] if AOVPrefix.lower() in entry.lower() else entry for entry in lightAOVNameList]\n\n#Define HSV/RGB knob label text\nRGB = '<big><font style=\"background-color:#806060;\">R<font style=\"background-color:#608071;\">G<font style=\"background-color:#606680;\">B'\nHSV = '<big><font style=\"background-color:#807460;\">H<font style=\"background-color:#606680;\">S<font style=\"background-color:#80607d;\">V'\n\ndict = \{\}\n\nfor index, lightAOV in enumerate(lightAOVNameListSliced ):\n\n    IntensityValue = n\['IntensityAOV' + lightIDNumbers\[index]].value()\n    ExposureValue = n\['ExposureAOV' + lightIDNumbers\[index]].value()\n    SaturationValue = n\['OverallSatAOV' + lightIDNumbers\[index]].value()\n\n    if n\['HSV_RGBAOV' + lightIDNumbers\[index]].label() == HSV:\n        for node in n.nodes():\n            if \"Colour AdjustmentsAOV\" + lightIDNumbers\[index] in node\['label'].getValue():\n                RGBValues = node\['multiply'].value()\n\n    if n\['HSV_RGBAOV' + lightIDNumbers\[index]].label() == RGB:\n        RGBValues = n\['RGBColourAOV' + lightIDNumbers\[index]].value()\n\n    if n\['DisableTemperatureAOV' + lightIDNumbers\[index]].value() == 0:\n        for node in n.nodes():\n            if \"TemperatureAOV\" + lightIDNumbers\[index] in node\['label'].getValue():\n                TemperatureValue = node\['multiply'].value()\n                TemperatureValue = TemperatureValue\[:-1]\n\n                RGBValues = \[x * y for x, y in zip(RGBValues, TemperatureValue)]\n\n    RedValue = RGBValues\[0]\n    GreenValue = RGBValues\[1]\n    BlueValue = RGBValues\[2]\n    dict\[lightAOV] = \[\n        round(IntensityValue, 3),\n        round(ExposureValue, 3),\n        round(RedValue, 3),\n        round(GreenValue, 3),\n        round(BlueValue, 3),\n        round(SaturationValue, 3),\n    ]\n    index = str(index + 1)\n\nkeysToRemove = \[key for key, values in dict.items() if sum(values) == 5]\n\nfor key in keysToRemove:\n    del dict\[key]\n\nfor key, values in dict.items():\n    dict\[key] = \[f'Int \{values\[0]\}', f'Exp \{values\[1]\}', f'RGB \{values\[2]\}, \{values\[3]\}, \{values\[4]\}, Sat \{values\[5]\}']\n\n\ndict = '\\n'.join(f'\{key\}: \{value\}' for key, value in dict.items())\n\n\}] \[python dict]"
+  old_message {{76 97 121 101 114 115 32 103 114 97 100 101 100 58 10 32}
+    }
+  old_expression_markers {{15 14 16 15}
+    }
+  box {{input.format.x+(input.format.r*.02)} {"input.format.y + (input.format.t*.02)"} {input.format.r-(input.format.r*.02)} {input.format.t-(input.format.t*.02)}}
+  xjustify {{"parent.textPos == 0 || parent.textPos == 2 ? 0 :2" x1094 0}}
+  yjustify {{"parent.textPos == 2 || parent.textPos == 3 ? 2 :0" x1094 0}}
+  transforms {{0 2}
+    }
+  cursor_position 2749
+  global_font_scale {{"clamp(parent.burnInTextSize, 0, 1) * (input.format.width/800)"}}
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{65.60009766 299.2997437}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1920 1080 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_opacity 0.3
+  shadow_opacity 0.8
+  shadow_angle 317
+  name GradeBurnIn1
+  label "BurnIn & Static\n"
+  xpos 778
+  ypos -218
+  disable {{"\[python -exec \{\n\nshuffleNodesChannel = \[]\n\nfor shuffleNodes in nuke.allNodes('Shuffle'):\n   if \"mainShuffle\" in shuffleNodes\['label'].getValue():\n      shuffleNodesChannelValue = shuffleNodes\['in'].value()\n      shuffleNodesChannel.append(shuffleNodesChannelValue)\n\n\nfilteredShuffleNodesChannel = \[item for item in shuffleNodesChannel if \"none\" not in item]\n\nif len(filteredShuffleNodesChannel) == 0:\n    i = 1\nelse:\n    i = 0\n\n\}] \[python i]\n" x1 1}}
+ }
+ Dot {
+  name Dot1
+  label Static
+  note_font_size 0
+  xpos 812
+  ypos -56
+ }
+set N380ff000 [stack 0]
+ Dot {
+  name Dot2
+  label Static
+  note_font_size 0
+  xpos 1081
+  ypos -56
+ }
+ Shuffle {
+  in none
+  alpha white
+  name Shuffle2
+  knobChanged "from LightMixerUtils import *\nDynamic_Group_Label()"
+  label "mainShuffleAOV1\nStatic\n"
+  xpos 1047
+  ypos 86
+ }
+set N380ff800 [stack 0]
+ Dot {
+  name Dot8
+  label Static
+  note_font_size 0
+  xpos 1424
+  ypos 102
+ }
+ Dot {
+  name Dot7
+  label Static
+  note_font_size 0
+  xpos 1424
+  ypos 1098
+ }
+push $N380ff800
+ Multiply {
+  channels rgb
+  value {{1-parent.SubtractAOV1}}
+  name Multiply1
+  label "Subtract Channel\nStatic"
+  xpos 1047
+  ypos 197
+ }
+ Grade {
+  white {{parent.IntensityAOV1}}
+  multiply {{"1 / (2 ** ( parent.ExposureAOV1 * -1 ) )"}}
+  name Grade3
+  label "Exposure & IntensityAOV1\nStatic"
+  xpos 1047
+  ypos 303
+ }
+ Saturation {
+  name Saturation2
+  label "Overall SaturationAOV1\nStatic"
+  xpos 1047
+  ypos 390
+ }
+ Grade {
+  multiply {{red} {green} {blue} 1}
+  name Grade1
+  label "Colour AdjustmentsAOV1\nStatic"
+  xpos 1047
+  ypos 503
+  addUserKnob {20 User l "Input Values"}
+  addUserKnob {6 modecheck l "mode check" +STARTLINE}
+  modecheck true
+  addUserKnob {7 red}
+  red {{"modecheck == 1 ? parent.RGBColourAOV1.r  : redHSV"}}
+  addUserKnob {7 green}
+  green {{"modecheck == 1 ? parent.RGBColourAOV1.g : greenHSV"}}
+  addUserKnob {7 blue}
+  blue {{"modecheck == 1 ? parent.RGBColourAOV1.b : blueHSV"}}
+  addUserKnob {26 ""}
+  addUserKnob {7 hueint R 0 360}
+  hueint {{"clamp(parent.HueAOV1, 0, 360)"}}
+  addUserKnob {7 satint}
+  satint {{"clamp( (parent.SaturationAOV1), 0, 1 )"}}
+  addUserKnob {7 valueint}
+  valueint {{"clamp( parent.ValueAOV1, 0, 1 )"}}
+  addUserKnob {20 conversion l Conversion}
+  addUserKnob {7 c}
+  c {{"satint * valueint"}}
+  addUserKnob {7 x}
+  x {{"c * (1 - abs((hueint / 60) % 2 - 1))"}}
+  addUserKnob {7 m}
+  m {{"valueint - c"}}
+  addUserKnob {7 redHSV l "Red HSV"}
+  redHSV {{"( hueint >= 0 && hueint < 60 ? this.c : hueint >= 60 && hueint < 120 ? this.x : hueint >= 120 && hueint < 180 ? 0 : hueint >= 180 && hueint < 240 ? 0 : hueint >= 240 && hueint < 300 ? this.x : this.c ) + this.m"}}
+  addUserKnob {7 greenHSV l "Green HSV"}
+  greenHSV {{"( hueint >= 0 && hueint < 60 ? this.x : hueint >= 60 && hueint < 120 ? this.c : hueint >= 120 && hueint < 180 ? this.c : hueint >= 180 && hueint < 240 ? this.x : hueint >= 240 && hueint < 300 ? 0 : 0 ) + this.m"}}
+  addUserKnob {7 blueHSV l "Blue HSV"}
+  blueHSV {{"( hueint >= 0 && hueint < 60 ? 0 : hueint >= 60 && hueint < 120 ? 0 : hueint >= 120 && hueint < 180 ? this.x : hueint >= 180 && hueint < 240 ? this.c : hueint >= 240 && hueint < 300 ? this.c : this.x) + this.m"}}
+ }
+ Dot {
+  name Dot5
+  label Static
+  note_font_size 0
+  xpos 1081
+  ypos 617
+ }
+set N381af400 [stack 0]
+ Grade {
+  multiply {{"clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 <= 66 ? 1 : clamp( ( ( ( ( clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 ) - 60 ) ** -0.1332047592 )  * 329.698727446 ), 0, 255 ) / 255"} {"clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 <= 66 ? clamp( ( ( ( log( clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 ) ) * 99.4708025861 ) - 161.1195681661 ), 0, 255 ) / 255  :   clamp( ( ( ( ( clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 ) - 60 ) ** -0.0755148492 )  * 288.1221695283 ), 0, 255 ) / 255"} {"clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 >= 66 ? 1 : clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 <= 19 ? 0 : clamp( ( ( log( ( ( clamp( parent.TemperatureAOV1, 1000, 40000 ) / 100 ) - 10 ) )  * 138.5177312231 ) - 305.0447927307 ), 0, 255 ) / 255"} 1}
+  name Grade2
+  knobChanged "from LightMixerUtils import *\nDynamic_Temperature_Knob()"
+  label "TemperatureAOV1\nStatic"
+  xpos 1047
+  ypos 670
+ }
+set N381af800 [stack 0]
+push $N381af400
+ Dot {
+  name Dot6
+  label Static
+  note_font_size 0
+  xpos 917
+  ypos 617
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge1
+  label Static
+  xpos 883
+  ypos 676
+ }
+ Saturation {
+  saturation 0
+  name Saturation1
+  label "\[value saturation]\nStatic"
+  xpos 883
+  ypos 813
+ }
+push $N381af800
+ Merge2 {
+  inputs 2
+  operation plus
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge4
+  label "Match luminance \nStatic"
+  xpos 1047
+  ypos 813
+ }
+ Dot {
+  name Dot3
+  label Static
+  note_font_size 0
+  xpos 1081
+  ypos 960
+ }
+set N38fa0c00 [stack 0]
+ Switch {
+  inputs 2
+  which {{1-parent.EnableAOV1}}
+  name Switch2
+  label Static
+  xpos 1047
+  ypos 1088
+ }
+ Dot {
+  name Dot9
+  label Static
+  note_font_size 0
+  xpos 1081
+  ypos 1178
+ }
+set N38fa1400 [stack 0]
+ Dot {
+  name Dot4
+  label Static
+  note_font_size 0
+  xpos 1081
+  ypos 1451
+ }
+push $N38fa1400
+ Shuffle {
+  alpha white
+  out {{{parent.Shuffle2.in}}}
+  name Shuffle1
+  label Static
+  xpos 925
+  ypos 1168
+ }
+ Remove {
+  channels rgba
+  name Remove1
+  label Static
+  xpos 925
+  ypos 1276
+ }
+push $N38fa0c00
+push $N380ff800
+push $N380ff000
+ Merge2 {
+  inputs 2
+  operation from
+  output rgb
+  maskChannelMask none
+  name Merge2
+  label "FromAOV1\nStatic"
+  xpos 778
+  ypos 86
+  disable {{1-parent.EnableAOV1}}
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  maskChannelMask {{{parent.Merge2.maskChannelMask}}}
+  maskChannelInput {{{parent.Merge2.maskChannelInput}}}
+  invert_mask {{parent.Merge2.invert_mask}}
+  name Merge3
+  label "PlusAOV1\nStatic"
+  xpos 778
+  ypos 944
+  disable {{1-parent.EnableAOV1}}
+ }
+ Copy {
+  inputs 2
+  channels all
+  maskChannelMask {{{parent.Merge2.maskChannelMask}}}
+  maskChannelInput {{{parent.Merge2.maskChannelInput}}}
+  invert_mask {{parent.Merge2.invert_mask}}
+  name Copy1
+  label "CopyAOV1\nStatic"
+  xpos 778
+  ypos 1258
+  disable {{1-parent.CopyAOV1}}
+ }
+ Switch {
+  inputs 2
+  which {{parent.SoloAOV1}}
+  name Switch1
+  label "Static "
+  xpos 778
+  ypos 1441
+ }
+ Output {
+  name Output1
+  label "Static & non select"
+  note_font "DejaVu Sans"
+  xpos 778
+  ypos 1741
+ }
 end_group
