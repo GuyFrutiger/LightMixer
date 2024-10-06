@@ -1,12 +1,11 @@
 # LightMixer
-Dynamic Nuke & Houdini LightMixing tool 
+Dynamic Nuke & Houdini LightMixing tool
 Current version: 1.0
 
 Tool info and Tutorial:
 https://www.guyfrutiger.com/toolbench
 
 HOW TO INSTALL:
-
 Nuke Gizmo:
 1. Unzip the archive
 2. Drag and drop the folder in your .nuke folder
