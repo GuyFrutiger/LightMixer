@@ -1,5 +1,4 @@
-# LightMixer
-## Dynamic Nuke & Houdini LightMixing tool 
+# LightMixer - Dynamic Nuke & Houdini LightMixing tool 
 (Houdini HDA only compatible with python 3.8 and up due to use of a walrus operator)
 
 Current version: 1.0
