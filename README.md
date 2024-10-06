@@ -1,13 +1,12 @@
-# LightMixer
-Dynamic Nuke & Houdini LightMixing tool
+# LightMixer - Dynamic Nuke & Houdini LightMixing tool 
+(Houdini HDA only compatible with python 3.8 and up due to use of a walrus operator)
 
 Current version: 1.0
 
 Tool info and Tutorial:
-
 https://www.guyfrutiger.com/toolbench
 
-HOW TO INSTALL: 
+### HOW TO INSTALL: 
 
 Nuke Gizmo:
 1. Unzip the archive
@@ -18,6 +17,7 @@ Nuke Gizmo:
     nuke.pluginAddPath('./LightMixer')
 ```
 4. Run Nuke
+
 
 Houdini HDA: 
 
