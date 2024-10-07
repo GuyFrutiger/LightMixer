@@ -4,7 +4,7 @@
 Current version: 1.0
 
 Tool info and Tutorial:
-https://www.guyfrutiger.com/toolbench
+https://www.guyfrutiger.com/toolbench/lightmixer
 
 ### HOW TO INSTALL: 
 
